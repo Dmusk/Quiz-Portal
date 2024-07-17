@@ -1,0 +1,23 @@
+tech Stack we are using :-
+
+1.yarn
+2.express
+3.typescript
+
+
+As we are making the RESTFULL API;
+
+so -->
+
+1.What is REST , HOw ,Why;
+
+2.Mongo DB<-> |mongoose| <-> Nodejs 
+  //schema 
+    -> skelaton of the entry to store;->name .email,pass;
+  //Models
+    -> name of table/collections if name user -> users;
+
+
+3. Response-interface
+    response fromat fix using interface
+    use of the postman to test the requests
