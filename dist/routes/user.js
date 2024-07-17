@@ -6,6 +6,8 @@ const user_1 = require("../controllers/user");
 const router = (0, express_1.Router)();
 //post
 router.post('/register', user_1.registerUser);
+//post -> /user/login
+router.post('/login', user_1.loginUser);
 //get ---> when id given user
 router.get('/:userID', user_1.getUser);
 //put -> to do modifications

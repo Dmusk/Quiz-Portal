@@ -1,10 +1,13 @@
 //Redirect request to particular method in the controller
 import { Router } from "express";
-import { registerUser , getUser ,updateUser} from "../controllers/user";
+import { registerUser , getUser ,updateUser,loginUser} from "../controllers/user";
 
 const router = Router();
 //post
 router.post('/register', registerUser);
+
+//post -> /user/login
+router.post('/login', loginUser);
 
 //get ---> when id given user
 router.get('/:userID', getUser);

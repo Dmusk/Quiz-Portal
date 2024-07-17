@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "bcryptjs": "^2.4.3",
     "express": "^4.19.2",
     "mongoose": "^8.5.1",
     "typescript": "^5.5.3",
@@ -12,10 +14,12 @@
   "author": "Aadarsh Wadile",
   "license": "MIT",
   "devDependencies": {
-    "@types/express": "^4.17.21"
+    "@types/express": "^4.17.21",
+    "ts-node": "^10.9.2"
   },
   "scripts": {
     "build": "tsc --noEmitOnError",
-    "start": "node ./dist/app.js"
+    "start": "node ./dist/app.js",
+    "start:ts": "ts-node ./src/app.ts"
   }
 }
