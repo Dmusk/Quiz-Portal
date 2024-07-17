@@ -21,3 +21,6 @@ so -->
 3. Response-interface
     response fromat fix using interface
     use of the postman to test the requests
+    req.body,
+    req.params,
+    req.queries,

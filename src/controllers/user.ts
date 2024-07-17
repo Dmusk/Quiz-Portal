@@ -31,8 +31,37 @@ const registerUser = async (req: Request, res: Response, next: NextFunction) => 
   
 };
 
+const getUser = async (req: Request, res: Response) => {
+  let resp: ReturnResponse;
 
+  try{
+  const userid = req.params.userID;
+  const result = await User.findById(userid);
+  if (!result)
+  {
+    resp = {status:"error",msg:"No data Found",data:{}}
+    res.send(resp);
+  }
+  else {
+    resp = {
+      status: "sucess", msg: "Found Successfully", data: {
+        name: result.name,
+        email: result.email,
+        password: result.password
+    }}
+    res.send(resp);
+  }
+  } catch (error) {
+    console.log(error);
+    resp = {status:"error",msg:"No data Found",data:{}}
+    res.status(403).send(resp);
+  }
+}
 
-export { registerUser };
+const updateUser = (req: Request, res: Response) => {
+  
+}
+
+export { registerUser ,getUser , updateUser};
 
 
