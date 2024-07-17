@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUser = exports.registerUser = void 0;
+exports.updateUser = exports.getUser = exports.registerUser = void 0;
 const user_1 = __importDefault(require("../models/user"));
 const registerUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let resp;
@@ -61,3 +61,26 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getUser = getUser;
+const updateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let resp;
+    try {
+        const userid = req.body.id;
+        const user = yield user_1.default.findById(userid);
+        if (!user) {
+            resp = { status: "error", msg: "No data Found", data: {} };
+            res.send(resp);
+        }
+        else {
+            user.name = req.body.name;
+            yield user.save();
+            resp = { status: "sucess", msg: "Modified Successfully", data: {} };
+            res.send(resp);
+        }
+    }
+    catch (error) {
+        console.log(error);
+        resp = { status: "error", msg: "No data Found", data: {} };
+        res.status(403).send(resp);
+    }
+});
+exports.updateUser = updateUser;

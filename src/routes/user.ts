@@ -10,6 +10,6 @@ router.post('/register', registerUser);
 router.get('/:userID', getUser);
 
 //put -> to do modifications
-router.put('/',updateUser);
+router.put('/update',updateUser);
 
 export default router;

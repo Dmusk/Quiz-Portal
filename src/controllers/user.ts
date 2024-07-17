@@ -58,9 +58,33 @@ const getUser = async (req: Request, res: Response) => {
   }
 }
 
-const updateUser = (req: Request, res: Response) => {
-  
-}
+
+const updateUser = async (req: Request, res: Response, next: NextFunction) => {
+
+  let resp: ReturnResponse;
+
+  try {
+    const userid = req.body.id;
+    const user = await User.findById(userid);
+    if (!user)
+    {
+      resp = {status:"error",msg:"No data Found",data:{}}
+      res.send(resp);
+    }
+    else {
+      user.name = req.body.name;
+      await user.save();
+      resp = { status: "sucess", msg: "Modified Successfully", data: {} };
+      res.send(resp);
+    }
+    
+
+  } catch (error) {
+    console.log(error);
+    resp = {status:"error",msg:"No data Found",data:{}}
+    res.status(403).send(resp);
+  }
+};
 
 export { registerUser ,getUser , updateUser};
 

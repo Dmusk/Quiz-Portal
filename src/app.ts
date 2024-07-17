@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/user";
 
 const app = express();
-const PORT = 3000;
+const PORT = 4500;
 const connectionString = "mongodb+srv://Dadu:DaduMDB%402003@cluster0.mzwtfbm.mongodb.net/quiz_portal";
 
 // Middleware to parse JSON bodies
