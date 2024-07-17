@@ -1,6 +1,7 @@
 // send or rescive data to/from the database via model
 import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 import User from "../models/user";
 
@@ -55,7 +56,10 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     {
       const status = await bcrypt.compare(password, result.password);
       if (status) {
-        resp = { status: "error", msg: "Logged In SuccessFully", data: {} };
+        //jwt tokenization
+        const token = jwt.sign({ userid: result._id }, "mysecretkey",{expiresIn:'1h'});
+
+        resp = { status: "sucess", msg: "Logged In SuccessFully", data: {token} };
         res.status(200).send(resp);
       }
       else {
