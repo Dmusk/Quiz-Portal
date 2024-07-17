@@ -1,6 +1,8 @@
 import express from 'express';
 import mongoose from "mongoose";
+
 import userRoutes from "./routes/user";
+import authRoutes from "./routes/auth";
 
 const app = express();
 const PORT = 1240;
@@ -14,7 +16,10 @@ app.get('/', (req, res) => {
 });
 
 // user
-// Redirect to -> /route/user 
+// Redirect to -> /route/auth 
+app.use('/auth', authRoutes);
+
+//Redirect to -> /route/user
 app.use('/user', userRoutes);
 
 mongoose.connect(connectionString, {
