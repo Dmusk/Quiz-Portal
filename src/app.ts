@@ -15,6 +15,16 @@ app.get('/', (req, res) => {
   res.send("This is My hosted site");
 });
 
+
+//global Scope:-
+declare global{
+  namespace Express{
+    interface Request{
+      userId?: String;
+    }
+  }
+}
+
 // user
 // Redirect to -> /route/auth 
 app.use('/auth', authRoutes);

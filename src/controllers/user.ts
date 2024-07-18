@@ -12,33 +12,36 @@ interface ReturnResponse{
 
 //get detials route
 const getUser = async (req: Request, res: Response) => {
-
-  console.log("Change 2");
+  // console.log(req.userId);
   let resp: ReturnResponse;
 
-  try{
-  const userid = req.params.userID;
-  const result = await User.findById(userid);
-  if (!result)
-  {
-    resp = {status:"error",msg:"No data Found",data:{}}
-    res.send(resp);
-  }
-  else {
-    resp = {
-      status: "sucess", msg: "Found Successfully", data: {
-        name: result.name,
-        email: result.email,
-        password: result.password
-    }}
-    res.send(resp);
-  }
+  try {
+    const userId = req.params.userID;
+    if (userId != req.userId)
+    {
+      const err = new Error("Not Access");
+      throw err;
+    }
+    const result = await User.findById(userId);
+    if (!result) {
+      resp = { status: "error", msg: "No data Found", data: {} };
+      res.send(resp);
+    } else {
+      resp = {
+        status: "sucess", msg: "Found Successfully", data: {
+          name: result.name,
+          email: result.email,
+          password: result.password
+        }
+      };
+      res.send(resp);
+    }
   } catch (error) {
     console.log(error);
-    resp = {status:"error",msg:"No data Found",data:{}}
+    resp = { status: "error", msg: "This is Catch Error Found", data: {} };
     res.status(403).send(resp);
   }
-}
+};
 
 
 //Update PUT route
@@ -48,6 +51,11 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 
   try {
     const userid = req.body.id;
+    if (userid != req.userId)
+    {
+      const err = new Error("Not Access TO this");
+      throw err;
+    }
     const user = await User.findById(userid);
     if (!user)
     {

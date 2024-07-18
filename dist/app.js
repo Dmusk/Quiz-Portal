@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const user_1 = __importDefault(require("./routes/user"));
+const auth_1 = __importDefault(require("./routes/auth"));
 const app = (0, express_1.default)();
 const PORT = 1240;
 const connectionString = "mongodb+srv://Dadu:DaduMDB%402003@cluster0.mzwtfbm.mongodb.net/quiz_portal";
@@ -15,7 +16,9 @@ app.get('/', (req, res) => {
     res.send("This is My hosted site");
 });
 // user
-// Redirect to -> /route/user 
+// Redirect to -> /route/auth 
+app.use('/auth', auth_1.default);
+//Redirect to -> /route/user
 app.use('/user', user_1.default);
 mongoose_1.default.connect(connectionString, {}).then(() => {
     console.log('Connected to MongoDB');

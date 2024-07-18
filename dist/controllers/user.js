@@ -12,73 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginUser = exports.updateUser = exports.getUser = exports.registerUser = void 0;
-const bcryptjs_1 = __importDefault(require("bcryptjs"));
+exports.updateUser = exports.getUser = void 0;
 const user_1 = __importDefault(require("../models/user"));
-//registration route
-const registerUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let resp;
-    try {
-        const email = req.body.email;
-        const name = req.body.name;
-        const password = yield bcryptjs_1.default.hash(req.body.password, 12);
-        const user = new user_1.default({ email, name, password });
-        const result = yield user.save();
-        if (!result) {
-            resp = { status: "error", msg: "No data Found", data: {} };
-            res.send(resp);
-        }
-        else {
-            resp = { status: "sucess", msg: "Registered Successfully", data: { userID: result._id } };
-            res.status(200).send(resp);
-        }
-    }
-    catch (error) {
-        console.log(error);
-        resp = { status: "error", msg: "No data Found", data: {} };
-        res.status(403).send(resp);
-    }
-});
-exports.registerUser = registerUser;
-//login route
-const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let resp;
-    try {
-        const email = req.body.email;
-        const password = req.body.password;
-        // Check the user in the DB
-        const result = yield user_1.default.findOne({ email });
-        // Check if the user exists
-        if (result) {
-            const status = yield bcryptjs_1.default.compare(password, result.password);
-            if (status) {
-                resp = { status: "error", msg: "Logged In SuccessFully", data: {} };
-                res.status(200).send(resp);
-            }
-            else {
-                resp = { status: "error", msg: "Incorrect Password", data: {} };
-                res.status(500).send(resp);
-            }
-        }
-        else {
-            resp = { status: "error", msg: "Username Not Found", data: {} };
-            res.status(500).send(resp);
-        }
-    }
-    catch (error) {
-        console.log(error);
-        resp = { status: "error", msg: "Error Occurred", data: {} };
-        res.status(500).send(resp);
-    }
-});
-exports.loginUser = loginUser;
 //get detials route
 const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("Change 2");
+    // console.log(req.userId);
     let resp;
     try {
-        const userid = req.params.userID;
-        const result = yield user_1.default.findById(userid);
+        const userId = req.params.userID;
+        if (userId != req.userId) {
+            const err = new Error("Not Access");
+            throw err;
+        }
+        const result = yield user_1.default.findById(userId);
         if (!result) {
             resp = { status: "error", msg: "No data Found", data: {} };
             res.send(resp);
